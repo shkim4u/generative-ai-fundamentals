@@ -1,27 +1,27 @@
 # 1. Scripts
 ## 1.1. Create a vector database using ```SingleStore```
 1. Create an account in ```SingleStore``` and get onboard onto it, which is a vector database service provider.<br>
-  * [SingleStore](https://www.singlestore.com/): Real-time Unified Distributed SQL and Built-in Vector Database
-  * [SingleStore Built-in Vector Database](https://www.singlestore.com/built-in-vector-database/)<br>
-    * ![Diagram Contextual Data as Vector](../resources/images/diagram_contextual-data-as-vectorsNEW.png)
-  * Can utilize storage provided by cloud service providers, including AWS S3.
-    * ![SingleStore Data Storage by Cloud Service Provider](../resources/images/SingleStore-Cloud-Storage-Options.png)
-  * Choose AWS as cloud provider.
-    * ![AWS as Cloud Provider](../resources/images/SingleStore-Onboarding-AWS-with-Region.png)
-    * Workspace Group Name: ```OpenAI Vector Database Workspace```
-    * ![Workspace Detials](../resources/images/SingleStore-Onboarding-AWS-with-Region-Workspace-Detials.png)
-  * SingleStore onboarding and creeating workspace completed.
-    * ![SingleStore Onboarded](../resources/images/SingleStore-Onboarded-AWS.png)
+     * [SingleStore](https://www.singlestore.com/): Real-time Unified Distributed SQL and Built-in Vector Database
+     * [SingleStore Built-in Vector Database](https://www.singlestore.com/built-in-vector-database/)<br>
+       * ![Diagram Contextual Data as Vector](../resources/images/diagram_contextual-data-as-vectorsNEW.png)
+     * Can utilize storage provided by cloud service providers, including AWS S3.
+       * ![SingleStore Data Storage by Cloud Service Provider](../resources/images/SingleStore-Cloud-Storage-Options.png)
+     * Choose AWS as cloud provider.
+       * ![AWS as Cloud Provider](../resources/images/SingleStore-Onboarding-AWS-with-Region.png)
+       * Workspace Group Name: ```OpenAI Vector Database Workspace```
+       * ![Workspace Detials](../resources/images/SingleStore-Onboarding-AWS-with-Region-Workspace-Detials.png)
+     * SingleStore onboarding and creeating workspace completed.
+       * ![SingleStore Onboarded](../resources/images/SingleStore-Onboarded-AWS.png)
 
 2. Create a vector database and a table.<br>
-* Create a vector database.<br>
-  * ![](../resources/images/Create-Vector-Database.png)<br>
-  * Database Name: ```openai_database```
-  * ![](../resources/images/Create-Vector-Database-OpenAI.png)<br>
-  * ![](../resources/images/Select-Created-Vector-Database-OpenAI.png)
-* Create a table.<br>
-  * Select ```SQL Editor```.<br>
-    * ![](../resources/images/Create-Table-Editor.png)
+   * Create a vector database.<br>
+     * ![](../resources/images/Create-Vector-Database.png)<br>
+     * Database Name: ```openai_database```
+     * ![](../resources/images/Create-Vector-Database-OpenAI.png)<br>
+     * ![](../resources/images/Select-Created-Vector-Database-OpenAI.png)
+   * Create a table.<br>
+     * Select ```SQL Editor```.<br>
+       * ![](../resources/images/Create-Table-Editor.png)
 
 ## 1.2. Do some embeddings using OpenAI API.
 1. Create an embeddings for initial input on OpenAI API.

@@ -40,12 +40,12 @@
 ```bash
 # (Note) OPENAI_API_KEY should be defined in environment variable.
 curl https://api.openai.com/v1/embeddings \
-	-H "Content-Type: application/json" \
-	-H "Authorization: Bearer $OPENAI_API_KEY" \
-	-d '{
-		"input": "Hello World",
-		"model": "text-embedding-ada-002"
-	}'
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $OPENAI_API_KEY" \
+-d '{
+    "input": "Hello World",
+    "model": "text-embedding-ada-002"
+}'
 ```
 
 혹은 ```Postman```과 같은 도구를 사용할 수 있습니다.<br>
@@ -63,14 +63,14 @@ Take note the response data (JSON array) and insert that value with the original
 ![Postman Copy Embedding Value](../resources/images/Copy-Embedding-Postman.png)
 
 * SingleStore SQL Editor에서 텍스트 값과 임베딩을 Insert<br>
- ```sql
-     INSERT INTO vectortable (text, vector) VALUES ("Hello World", JSON_ARRAY_PACK("[
-             -0.0070839436,
-             0.003516513,
-             -0.0070712143,
-             ... -- Deleted for brevity.
-     ]"));
- ```
+```sql
+INSERT INTO vectortable (text, vector) VALUES ("Hello World", JSON_ARRAY_PACK("[
+    -0.0070839436,
+    0.003516513,
+    -0.0070712143,
+    ... -- Deleted for brevity.
+]"));
+```
  <br>
 
  ![SingleStore SQL Editor Embedding Hello World](../resources/images/Insert-Embedding-Value-Hello-World.png)<br>
@@ -108,7 +108,7 @@ curl --location 'https://api.openai.com/v1/embeddings' \
 ```
 
 ![Postman Contract Text](../resources/images/Postman-Contract-Text-Embedding.png)<br>
-![OpenAI Contract Text](../resources/images/Insert-contract-Text-Embedding.png)<br>
+![OpenAI Contract Text](../resources/images/Insert-Contract-Text-Embedding.png)<br>
 ![Embedding Row Contract Text](../resources/images/Embedding-Row-Contract-Text.png)<br>
 
 # 3. Searching Embeddings<br>
@@ -143,6 +143,18 @@ curl --location 'https://api.openai.com/v1/embeddings' \
      ```
     * As you can see below, the text with the biggest score is ```OpenAI Embeddings and Vectorize is made easy!```.<br>
       ![Search Embedding OpenAI](../resources/images/Select-Neighbor-Text-With-Highest-Similarities.png)<br>  
+
+3. Try to search with more words and their embeddings to clear how OpenAI embedding works.<br>
+    * Recommended words
+      * ```LLM```, ```ChatGPT```, ```Deep Learning```, etc.
+    * ```LLM```<br>
+      * ![](../resources/images/Create-Embedding-LLM.png)<br>
+      * ![](../resources/images/Search-Word-Embedding-LLM.png)<br>
+      * 아마도 Cut-off 일자가 ```LLM```과 ```OpenAI``` 연관 랭크가 낮은데 영향을 끼쳤을 수도 있을 듯.<br>
+      * ```Deep Learning``` 등으로도 추가 테스트<br>
+    * 만약 결과가 잘 안나오면 보편적인 토픽으로 Embedding 검색을 시도해 볼 것.
+      * 예를 들어 "C/C++"로 Embedding 값을 생성한 후 Vector Table에 Insert.
+      * 이후에 ```DOT_PRODUCT```를 ```Pointer```라는 단어로 수행해 볼 것.
 
 # 4. References
 

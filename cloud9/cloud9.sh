@@ -111,8 +111,8 @@ df -h
 ## 8. Download cuDNN (CUDA Deep Neural Network Library) and install it.
 echo "8.1. Downloading cuDNN..."
 #curl -fsSL https://developer.download.nvidia.com/compute/cudnn/secure/8.1.1.33/cudnn-8.1.1.33-linux-x64-v8.1.1.33.tgz | tar -xz -C /usr/local
-echo CUDNN_DOWNLOAD_URL="https://shkim4u-generative-ai.s3.ap-northeast-2.amazonaws.com/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz"
-wget $CUDNN_DOWNLOAD_URL -O cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
+export CUDNN_DOWNLOAD_URL="https://shkim4u-generative-ai.s3.ap-northeast-2.amazonaws.com/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz"
+wget "${CUDNN_DOWNLOAD_URL}" -O cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
 tar -xvf cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
 
 echo "8.2. Installing cuDNN..."

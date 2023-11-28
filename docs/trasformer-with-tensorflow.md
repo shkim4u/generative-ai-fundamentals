@@ -7,7 +7,8 @@
 1. Cloud9 통합 환경 (IDE) 생성 (CloudShell 사용)
 2. Cloud9 통합 환경 (IDE) 설정 (Cloud9)
 3. Transformer with TensorFlow Demo Kit 받기
-4. Transformer 학습 및 추론 실습 (Jupyter Notebook)
+4. Jupyter Notebook 환경 구성
+5. Transformer 학습 및 추론 실습 (Jupyter Notebook)
 
 ## 1. Cloud9 통합 환경 (IDE) 생성 (CloudShell 사용)
 ### 1.1. AWS Cloud9 환경 생성 (AWS CLI 사용)
@@ -43,45 +44,47 @@ cd ~/environment/
 curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/main/cloud9/cloud9.sh | bash
 ```
 
+## 3. Transformer with TensorFlow Demo Kit 받기
+```bash
+cd ~/environment/
+git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-ai-fundamentals
+cd generative-ai-fundamentals
+```
 
-Download below cuDNN library from NVIDIA Developer site.
-https://developer.nvidia.com/downloads/compute/cudnn/secure/8.9.6/local_installers/12.x/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz/
+## 4. Jupyter Notebook 환경 구성
 
+해당 리포지터리에는 Foundation Model에 활용되는 Transformer를 TensorFlow를 통해 이해할 있도록 도와주는 Jupyter Notebook 파일이 포함되어 있습니다.<br>
 
-https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installdriver
+Cloud9 상에서 Jupyter Notebook 환경을 구성하기 위하여 아래 명령을 수행합니다.
 
-아래 경로에 이미 다운로드되어 있음
-aws s3 presign "s3://shkim4u-dev-backup/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz"
-wget <Presigned URL> -o cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
-tar -xvf cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
-; No need: sudo yum install zlib
-
-sudo mkdir -p /usr/local/cuda/include /usr/local/cuda/lib64
-
-sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
-sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
-sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
-
-
-And then upload it to the Cloud9.
-
-sudo yum remove -y openssl-devel
-sudo yum install -y openssl11 openssl11-devel
-
-pip uninstall urllib3
-pip install 'urllib3<2.0'
+```bash
+cd ~/environment/generative-ai-fundamentals
 
 python3 -m venv .venv
 source .venv/bin/activate
+
+# Upgrade OpenSSL to 1.1 compatible with urllib3 v2.0.
+sudo yum remove openssl-devel
+sudo yum install gcc openssl11-devel bzip2-devel libffi-devel 
+# In case the above not working.
+#pip uninstall urllib3
+#pip install 'urllib3<2.0'
+
 pip install jupyterlab
 
-jupyter lab --ip 0.0.0.0
+nohup jupyter lab --ip 0.0.0.0 &
+```
 
-Open port 8888 for the EC2 instance of Cloud9.
+위를 수행하면 표시되는 URL에 표시되는 인증 토큰을 메모해 두고 Jupyter Notebook 접속할 때 사용합니다.<br>
+Jupyter Notebook 접속 주소는 아래 명령을 통해 얻을 수 있습니다.<br>
+```bash
+export EC2_INSTANCE_ID=$(aws ec2 describe-instances --filters Name=tag:Name,Values="*cloud9-workspace*" Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
 
-브라우저로 EC2 주소 http://<EC2 주소>:8888로 접속
+# Retrieve the public IP address of EC2 instance with AWS CLI.
+export EC2_INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $EC2_INSTANCE_ID --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
 
-Cloud9에서 표시되는 토큰을 사용하여 로그인
+echo "http://$EC2_INSTANCE_IP:8888"
+```
 
-transforme.ipynb Setup 섹션에서 아래 줄은 주석 처리
-#!apt install --allow-change-held-packages libcudnn8=8.1.0.77-1+cuda11.2
+## 5. Transformer 학습 및 추론 실습 (Jupyter Notebook)
+이후 과정은 Jupyter Notebook에 접속한 후에 진행자의 안내에 따라 수행합니다.

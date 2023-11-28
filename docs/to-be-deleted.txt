@@ -1,0 +1,43 @@
+
+
+Download below cuDNN library from NVIDIA Developer site.
+https://developer.nvidia.com/downloads/compute/cudnn/secure/8.9.6/local_installers/12.x/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz/
+
+
+https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#installdriver
+
+아래 경로에 이미 다운로드되어 있음
+aws s3 presign "s3://shkim4u-dev-backup/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz"
+wget <Presigned URL> -o cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
+tar -xvf cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz
+; No need: sudo yum install zlib
+
+sudo mkdir -p /usr/local/cuda/include /usr/local/cuda/lib64
+
+sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
+sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+
+
+And then upload it to the Cloud9.
+
+sudo yum remove -y openssl-devel
+sudo yum install -y openssl11 openssl11-devel
+
+pip uninstall urllib3
+pip install 'urllib3<2.0'
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install jupyterlab
+
+jupyter lab --ip 0.0.0.0
+
+Open port 8888 for the EC2 instance of Cloud9.
+
+브라우저로 EC2 주소 http://<EC2 주소>:8888로 접속
+
+Cloud9에서 표시되는 토큰을 사용하여 로그인
+
+transforme.ipynb Setup 섹션에서 아래 줄은 주석 처리
+#!apt install --allow-change-held-packages libcudnn8=8.1.0.77-1+cuda11.2

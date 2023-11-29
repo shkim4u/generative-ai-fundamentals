@@ -120,6 +120,7 @@ sudo mkdir -p /usr/local/cuda/include /usr/local/cuda/lib64
 sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
 sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+echo "8.2. cuDNN installed!"
 
 ## 99. AWS CLI Completer.
 echo "complete -C '/usr/local/bin/aws_completer' aws" >> ~/.bashrc

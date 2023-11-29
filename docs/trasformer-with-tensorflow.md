@@ -49,6 +49,9 @@ curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/
 cd ~/environment/
 git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-ai-fundamentals
 cd generative-ai-fundamentals
+
+# No need to track git.
+rm -rf .git
 ```
 
 ## 4. Jupyter Notebook 환경 구성
@@ -64,15 +67,20 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Upgrade OpenSSL to 1.1 compatible with urllib3 v2.0.
-sudo yum remove openssl-devel
-sudo yum install gcc openssl11-devel bzip2-devel libffi-devel 
+#sudo yum remove -y openssl-devel
+#sudo yum install -y gcc openssl11-devel bzip2-devel libffi-devel 
+
 # In case the above not working.
-#pip uninstall urllib3
-#pip install 'urllib3<2.0'
+# It's tricky a little bit to migrate to urllib3 version 2, which requires Amazon Linux 2023 and Python upgrade; Let's take a quick workaround for now.
+# Amazon Linux 2: Upgrade to Amazon Linux 2023. Alternatively, you can install OpenSSL 1.1.1 on Amazon Linux 2 using yum install openssl11 openssl11-devel and then install Python with a tool like pyenv.
+# https://urllib3.readthedocs.io/en/2.0.6/v2-migration-guide.html 
+pip uninstall -y urllib3
+pip install 'urllib3<2.0'
 
 pip install jupyterlab
 
 nohup jupyter lab --ip 0.0.0.0 &
+tail -f nohup.out
 ```
 
 위를 수행하면 표시되는 URL에 표시되는 인증 토큰을 메모해 두고 Jupyter Notebook 접속할 때 사용합니다.<br>

@@ -15,7 +15,7 @@ aws iam list-attached-user-policies --user-name admin
 # (이것은 정확하지 않을 수 있음) Instance Profile은 이후에 AdministratorAccess 권한을 가진 Role에 연결된 Instance Profile로 대체됨.
 # (이것은 정확하지 않을 수 있음) Why does "aws cloud9 create-environment-ec2" command NOT support this option with it?
 # (참고) https://docs.aws.amazon.com/cloud9/latest/user-guide/ec2-ssm.html
-export CLOUD9_SSM_ACCESS_ROLE_POLICY_DOCUMENT=`curl -fsSL https://raw.githubusercontent.com/shkim4u/m2m-travelbuddy/main/cloud9/cloud9-ssm-access-role-trust-policy.json`
+export CLOUD9_SSM_ACCESS_ROLE_POLICY_DOCUMENT=`curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/main/cloud9/cloud9-ssm-access-role-trust-policy.json`
 echo $CLOUD9_SSM_ACCESS_ROLE_POLICY_DOCUMENT
 
 # AWSCloud9SSMAccessRole 생성 및 권한 부여
@@ -49,7 +49,7 @@ export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output=tex
 #sed -i 's@CONTAINER_IMAGE@'"$ECR_REPO_URI:$IMAGE_TAG"'@' $EKS_MANIFEST_FILES_DIR/02_deployment.yaml
 
 # AdministratorAccess 권한이 부여된 Trust Relationship Policy (from GitHub).
-export CLOUD9_INSTANCE_ROLE_POLICY_DOCUMENT=`curl -fsSL https://raw.githubusercontent.com/shkim4u/m2m-travelbuddy/main/cloud9/cloud9-admin-role-trust-policy-with-admin-user-trust.json | sed -e "s/AWS_ACCOUNT_ID/${AWS_ACCOUNT_ID}/g"`
+export CLOUD9_INSTANCE_ROLE_POLICY_DOCUMENT=`curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/main/cloud9/cloud9-admin-role-trust-policy-with-admin-user-trust.json | sed -e "s/AWS_ACCOUNT_ID/${AWS_ACCOUNT_ID}/g"`
 echo $CLOUD9_INSTANCE_ROLE_POLICY_DOCUMENT
 
 # "cloud9-admin" Role 생성 및 권한 부여

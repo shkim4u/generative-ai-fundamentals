@@ -16,7 +16,7 @@ sudo curl -o /usr/local/bin/kubectl https://s3.us-west-2.amazonaws.com/amazon-ek
 # 실행 모드 변경
 sudo chmod +x /usr/local/bin/kubectl
 # 설치 확인
-kubectl version --short --client
+kubectl version --client
 
 ## 2.2. eksctl 설치
 echo "2.2. Installing eksctl..."

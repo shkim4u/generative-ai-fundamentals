@@ -103,7 +103,7 @@ echo "7.1. Checking disk size before extending..."
 df -h
 
 echo "7.2. Now extending the disk size..."
-curl -fsSL https://raw.githubusercontent.com/shkim4u/kubernetes-misc/main/aws-cloud9/resize.sh | bash
+curl -fsSL https://raw.githubusercontent.com/shkim4u/kubernetes-misc/main/aws-cloud9/resize.sh | bash -s -- 100
 
 echo "7.3. Checking disk size with extension..."
 df -h
@@ -121,6 +121,11 @@ sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
 sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 echo "8.2. cuDNN installed!"
+
+## 9. [2023-12-06] Cloud9 is now removed to reflect the license change of HashiCorp terraform, so manually install it.
+echo "9. Installing terraform..."
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum -y install terraform
 
 ## 99. AWS CLI Completer.
 echo "complete -C '/usr/local/bin/aws_completer' aws" >> ~/.bashrc

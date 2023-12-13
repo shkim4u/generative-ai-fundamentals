@@ -15,7 +15,7 @@
 진행자가 제공한 AWS 관리 콘솔에서 ```CloudShell```을 실행한 후 아래 명령을 수행하여 ```Cloud9``` 환경을 생성해 줍니다.<br>
 ```CloudShell```도 다수의 개발 언어와 런타임, 그리고 클라우드 환경을 다룰 수 있는 CLI를 기본적으로 제공하지만 컨테이너를 사용할 수 있고 풍부한 통합 개발 환경을 제공하는 ```Cloud9```을 사용하기로 합니다.<br>
 ```bash
-curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/main/cloud9/bootstrap-v2-with-admin-user-trust.sh | bash
+curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/main/cloud9/bootstrap-v2-with-admin-user-trust.sh | bash -s -- c5.9xlarge
 ```
 ## 2. Cloud9 통합 개발 환경 (IDE) 설정
 ```Cloud9``` 통합 환경에 접속하여 필요한 사항을 사전에 구성한 쉘 스크립트 파일을 아래와 같이 실행합니다.
@@ -38,6 +38,7 @@ curl -fsSL https://raw.githubusercontent.com/shkim4u/Generative-AI-Fundamentals/
 6. Cloud9 추가 설정하기
 7. 디스크 증설
 8. CUDA Deep Neural Network (cuDNN) 라이브러리
+9. [2023-12-06 추가] Terraform 라이선스 정책 변경으로 인해 Cloud9에서 Terraform이 제거됨으로써 수동 설치
 
 ```bash
 cd ~/environment/

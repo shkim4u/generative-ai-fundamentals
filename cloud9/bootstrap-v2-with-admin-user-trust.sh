@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CLOUD9_INSTANCE_TYPE=$1
+
 # IAM User 생성.
 aws iam create-user --user-name admin
 
@@ -42,7 +44,7 @@ export SUBNET_ID=`aws ec2 describe-subnets --query "Subnets[?(VpcId==${QUOTED_VP
 
 # 우선 Workshop Studio 콘솔에서 "Get AWS CLI credentials"를 통해 AWS Credentials 환경 변수를 설정한 후 실행할 것.
 #aws cloud9 create-environment-ec2 --name cloud9-workspace --instance-type c5.9xlarge --connection-type CONNECT_SSM --automatic-stop-time-minutes 10080
-aws cloud9 create-environment-ec2 --name cloud9-workspace --instance-type c5.24xlarge --image-id amazonlinux-2-x86_64 --subnet-id "${SUBNET_ID}" --connection-type CONNECT_SSM --automatic-stop-time-minutes 10080
+aws cloud9 create-environment-ec2 --name cloud9-workspace --instance-type ${CLOUD9_INSTANCE_TYPE} --image-id amazonlinux-2-x86_64 --subnet-id "${SUBNET_ID}" --connection-type CONNECT_SSM --automatic-stop-time-minutes 10080
 
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output=text) && echo $AWS_ACCOUNT_ID
 

@@ -120,6 +120,17 @@ sudo mkdir -p /usr/local/cuda/include /usr/local/cuda/lib64
 sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
 sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+
+# Load LD_LIBRARY_PATH
+# References
+# - https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/install-nvidia-driver.html
+# -https://repost.aws/ko/questions/QUBqYWuFr7SyC6P6Uae9LOww/sagemaker-g4-and-g5-instances-do-not-have-working-nvidia-drivers
+# - https://stackoverflow.com/questions/75614728/cuda-12-tf-nightly-2-12-could-not-find-cuda-drivers-on-your-machine-gpu-will
+# - https://arinzeakutekwe.medium.com/how-to-configure-nvidia-gpu-to-work-with-tensorflow-2-on-aws-sagemaker-1be98b9db464
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
+source ~/.bashrc
+/sbin/ldconfig -N -v $(sed 's/:/ /' <<< $LD_LIBRARY_PATH) 2>/dev/null
+
 echo "8.2. cuDNN installed!"
 
 ## 9. [2023-12-06] Cloud9 is now removed to reflect the license change of HashiCorp terraform, so manually install it.

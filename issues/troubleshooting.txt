@@ -1,2 +1,41 @@
 1. TensorRT warning
 https://discuss.tensorflow.org/t/unable-to-get-tensorflow-working-correctly/18981
+
+2. Tensoflow Installation Guide
+https://www.tensorflow.org/install/pip#step-by-step_instructions
+
+3. Tensorflow GPU 확인 방법
+https://precommer.tistory.com/78
+
+4. AWS SageMaker on GPU
+https://stackoverflow.com/questions/60868257/aws-sagemaker-on-gpu
+
+>>>
+5. Ask with ChatGPT
+ To configure Amazon SageMaker Studio notebook to use TensorFlow with the CUDA library, you can follow these steps:
+
+1. Launch SageMaker Studio: First, open the Amazon SageMaker console and navigate to Amazon SageMaker Studio. Access the SageMaker Studio control panel.
+
+2. a New Notebook: Inside SageMaker Studio, create a new notebook or open an one that you want to configure to use TensorFlow with the NVIDIA library.
+
+3. Choose TensorFlow Kernel: When creating a new notebook, select a TensorFlow kernel, which comes pre-configured with NVIDIA CUDA dependencies. If using a pre-existing notebook, you can change the kernel to a TensorFlow compatible one by clicking on the "Change Kernel" option in the notebook interface and selecting a TensorFlow kernel.
+
+4. Install additional packages (if needed): Depending on your specific requirements, you may need to install additional TensorFlow or CUDA versions. You can use the notebook's terminal or a cell in the notebook to run installation commands, such as pip tensorflow-gpu to get the GPU-supported version of TensorFlow.
+
+5. Configure for GPU acceleration: To ensure that TensorFlow is configured to use the NVIDIA CUDA library for GPU acceleration, you can add configuration code to your. For example, you can use TensorFlow's GPU device detection code to verify that TensorFlow is detecting and utilizing the GPU:
+
+```python
+import tensorflow as tf
+print("Num GPUs Available: ", len(tf.experimental.list_physical_devices('GPU')))
+```
+
+6. Verify GPU usage: Run a test to verify that TensorFlow is indeed using the GPU for computation. You can do this by running a TensorFlow-based computation and checking the GPU usage using command-line tools available in the notebook environment.
+
+By these steps, you can configure your Amazon SageMaker Studio notebook to use TensorFlow with NVIDIA CUDA library for GPU acceleration.  
+<<<
+
+6. Python 패키지를 Amazon SageMaker 노트북 인스턴스의 Conda 환경에 설치하려면 어떻게 해야 하나요?
+https://repost.aws/ko/knowledge-center/sagemaker-python-package-conda
+
+7. TF-TRT Warning: Could not find TensorRT
+https://github.com/tensorflow/tensorflow/issues/61468

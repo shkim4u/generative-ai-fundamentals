@@ -66,6 +66,7 @@ cd ~/environment/generative-ai-fundamentals
 
 python3 -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 
 # Upgrade OpenSSL to 1.1 compatible with urllib3 v2.0.
 #sudo yum remove -y openssl-devel

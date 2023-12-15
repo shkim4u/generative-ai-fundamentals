@@ -109,6 +109,8 @@ echo "7.3. Checking disk size with extension..."
 df -h
 
 ## 8. Download cuDNN (CUDA Deep Neural Network Library) and install it.
+# 아래는 Nvidia GPU가 하드웨어 적으로 지원되지만 cuDNN 드라이버가 설치되지 않은 경우를 위해 정리된 스크립트입니다.
+
 echo "8.1. Downloading cuDNN..."
 #curl -fsSL https://developer.download.nvidia.com/compute/cudnn/secure/8.1.1.33/cudnn-8.1.1.33-linux-x64-v8.1.1.33.tgz | tar -xz -C /usr/local
 export CUDNN_DOWNLOAD_URL="https://shkim4u-generative-ai.s3.ap-northeast-2.amazonaws.com/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz"

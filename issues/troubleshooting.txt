@@ -39,3 +39,103 @@ https://repost.aws/ko/knowledge-center/sagemaker-python-package-conda
 
 7. TF-TRT Warning: Could not find TensorRT
 https://github.com/tensorflow/tensorflow/issues/61468
+
+>>>
+8. Check if TensorFlow is correctly configured in fresh Amazon Linux DLAMI.
+텐서플로우가 아마존 리눅스 DLAMI 인스턴스에 정상적으로 설정되었는지 확인하는 방법
+ To check if TensorFlow framework is correctly installed on Amazon Linux, you can use the following steps:
+
+0. LD_LIBRARY_PATH 확인
+echo $LD_LIBRARY_PATH 
+ls -al /usr/local/
+ls -al /etc/alternatives/cuda
+ls -al /usr/local/cuda-11.8
+python --version
+
+1. Open a terminal window on your Amazon Linux instance.
+
+2. Activate the virtual environment (if TensorFlow was installed within a virtual environment):
+   ```bash
+   source <path_to_virtual_env>/bin/activate
+   ```
+
+3. Launch a Python interpreter:
+   ```bash
+   python
+   ```
+
+4. Import TensorFlow within the Python interpreter:
+   ```python
+   import tensorflow as tf
+   ```
+
+5. If TensorFlow is imported without any error messages, it indicates that TensorFlow is correctly installed and accessible within your Python environment.
+
+6. You can also verify the TensorFlow version to ensure it matches the expected version:
+   ```python
+   print(tf.__version__)
+   ```
+7. Another command
+print(tf.test.is_built_with_cuda())
+
+from tensorflow.python.client import device_lib
+print(device_lib.list_local_devices())
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+
+
+
+tf.test.gpu_device_name()
+
+Executing these steps will confirm if TensorFlow is properly installed and accessible within your Amazon Linux environment.  
+<<<
+
+>>>
+9. Conda 설정
+To install and configure a Python conda environment with TensorFlow GPU, follow these steps:
+
+1. **Install Miniconda**:
+   - If you don't have Miniconda or Anaconda installed, download and install Miniconda from the official website: https://docs.conda.io/en/latest/miniconda.html
+
+2. **Create a New Conda Environment**:
+   - Open a terminal or command prompt.
+   - Create a new conda environment using the following command:
+     ```
+     conda create -n myenv python=3.8
+     ```
+   - Replace "myenv" with the name you want for your environment. This command creates a new environment with Python 3.8 installed.
+
+3. **Activate the New Environment**:
+   - Activate the new environment using the following command:
+     - On Windows:
+       ```
+       conda activate myenv
+       ```
+     - On macOS and Linux:
+       ```
+       source activate myenv
+       ```
+
+4. **Install TensorFlow-GPU**:
+   - Once the environment is activated, install TensorFlow-GPU using pip:
+     ```
+     pip install tensorflow-gpu
+     ```
+
+5. **Install CUDA Toolkit and cuDNN**:
+   - Download and install the CUDA Toolkit and cuDNN from the NVIDIA website. Make sure to install versions compatible with your GPU and TensorFlow version. Follow the installation instructions provided by NVIDIA.
+
+6. **Test the Installation**:
+   - Create a Python script and import TensorFlow to test if the GPU is being utilized:
+     ```python
+     import tensorflow as tf
+     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+     ```
+
+7. **Deactivate the Environment** (Optional):
+   - When you're done working in the environment, deactivate it using the following command:
+     ```
+     conda deactivate
+     ```
+
+These steps should help you install and configure a Python conda environment with TensorFlow-GPU. Remember to refer to the official documentation and installation guides for the specific versions and system requirements.  
+<<<

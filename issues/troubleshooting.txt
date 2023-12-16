@@ -139,3 +139,29 @@ To install and configure a Python conda environment with TensorFlow GPU, follow 
 
 These steps should help you install and configure a Python conda environment with TensorFlow-GPU. Remember to refer to the official documentation and installation guides for the specific versions and system requirements.  
 <<<
+
+10. pip install tensorflow[and-cuda]로 설치할 경우에는 아래와 같이 CUDA Driver 버전이 안 맞는 에러 발생
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sagemaker-user/generative-ai-fundamentals/tf_env/lib/python3.10/site-packages/tensorflow/python/framework/test_util.py", line 172, in gpu_device_name
+    for x in device_lib.list_local_devices():
+  File "/home/sagemaker-user/generative-ai-fundamentals/tf_env/lib/python3.10/site-packages/tensorflow/python/client/device_lib.py", line 41, in list_local_devices
+    _convert(s) for s in _pywrap_device_lib.list_devices(serialized_config)
+RuntimeError: cudaGetDevice() failed. Status: CUDA driver version is insufficient for CUDA runtime version
+
+여기에 보면
+https://blog.tensorflow.org/2023/11/whats-new-in-tensorflow-2-15.html
+
+The tensorflow pip package has a new, optional installation method for Linux that installs necessary NVIDIA CUDA libraries through pip.
+As long as the NVIDIA driver is already installed on the system, you may now run pip install tensorflow[and-cuda] to install TensorFlow's NVIDIA CUDA library dependencies in the Python environment.
+Aside from the NVIDIA driver, no other pre-existing NVIDIA CUDA packages are necessary. In TensorFlow 2.15, CUDA has been upgraded to version 12.2.
+
+11. Driver incompatibility for triton image on sagemaker instance #3813
+https://github.com/triton-inference-server/server/issues/3813
+
+12. CUDA 드라이버 업그레이드
+https://arinzeakutekwe.medium.com/how-to-configure-nvidia-gpu-to-work-with-tensorflow-2-on-aws-sagemaker-1be98b9db464
+
+* 으~ 정말~ SageMaker Studio는 Root 액세스를 허용하지 않아서 드라이버 업그레이드 불가능
+https://github.com/aws/studio-lab-examples/issues/118
+https://docs.securestate.vmware.com/rule-docs/aws-sagemaker-notebookinstance-root-access-enabled

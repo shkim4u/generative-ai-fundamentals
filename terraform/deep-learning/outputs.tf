@@ -40,5 +40,5 @@ output "iam_dlami_admin_ec2_instance_profile" {
 
 output "dlami_ec2_instance_public_ip" {
   description = "(DLAMI EC2) Public IP of DLAMI instance"
-  value = module.dlami_ec2.dlami_ec2_instance_public_ip
+  value = var.exclude_dlami_instance ? null : module.dlami_ec2[0].public_ip
 }

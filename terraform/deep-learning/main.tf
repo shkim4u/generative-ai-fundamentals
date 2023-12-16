@@ -7,6 +7,8 @@ module "iam" {
 }
 
 module "dlami_ec2" {
+  count = var.exclude_dlami_instance ? 0 : 1
+
   source = "./modules/dlami-ec2"
   subnet_id = module.network.public_subnets[0]
   role_name = module.iam.dlami_admin_role_name

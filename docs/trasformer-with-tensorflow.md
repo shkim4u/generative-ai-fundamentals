@@ -88,7 +88,8 @@ tail -f nohup.out
 위를 수행하면 표시되는 URL에 표시되는 인증 토큰을 메모해 두고 Jupyter Notebook 접속할 때 사용합니다.<br>
 Jupyter Notebook 접속 주소는 아래 명령을 통해 얻을 수 있습니다.<br>
 ```bash
-export EC2_INSTANCE_ID=$(aws ec2 describe-instances --filters Name=tag:Name,Values="*cloud9-workspace*" Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
+# export EC2_INSTANCE_ID=$(aws ec2 describe-instances --filters Name=tag:Name,Values="*cloud9-workspace*" Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
+export EC2_INSTANCE_ID=$(aws ec2 describe-instances --filters Name=tag:Name,Values="*DLAMI-Instance*" Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
 
 # Retrieve the public IP address of EC2 instance with AWS CLI.
 export EC2_INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $EC2_INSTANCE_ID --query "Reservations[*].Instances[*].PublicIpAddress" --output text)

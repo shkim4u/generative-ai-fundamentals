@@ -1,5 +1,5 @@
 resource "aws_iam_role" "dlami_admin" {
-  name               = "dmami-admin"
+  name               = "dlami-admin"
   path               = "/"
   assume_role_policy = jsonencode({
     Version   = "2012-10-17"

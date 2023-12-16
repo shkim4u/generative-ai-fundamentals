@@ -1,3 +1,12 @@
 .idea
 .venv
 private
+
+# Terraform
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfstate.lock.info
+.terraform.lock.hcl
+.terraform/
+terraform.log

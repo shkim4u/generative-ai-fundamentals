@@ -46,6 +46,6 @@ resource "aws_volume_attachment" "this" {
 }
 
 resource "aws_ebs_volume" "this" {
-  availability_zone = module.ec2.availability_zone
+  availability_zone = module.ec2_instance.availability_zone
   size              = 100
 }

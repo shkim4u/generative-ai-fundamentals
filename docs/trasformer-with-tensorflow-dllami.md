@@ -60,5 +60,5 @@ git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-a
 cd ~/generative-ai-fundamentals/terraform/deep-learning
 
 terraform init
-terraform appy -auto-approve
+terraform apply -auto-approve
 ```

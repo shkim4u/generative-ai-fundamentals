@@ -7,7 +7,7 @@ module "iam" {
 }
 
 module "dlami_ec2" {
-  # count = var.exclude_dlami_instance ? 0 : 1
+  count = var.exclude_dlami_instance ? 0 : 1
 
   source = "./modules/dlami-ec2"
   subnet_id = module.network.public_subnets[0]

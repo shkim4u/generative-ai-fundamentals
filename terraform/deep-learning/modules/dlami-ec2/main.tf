@@ -40,7 +40,7 @@ module "ec2_instance" {
 }
 
 resource "aws_volume_attachment" "this" {
-  device_name = "/dev/xvda"
+  device_name = "/dev/sdh"
   volume_id   = aws_ebs_volume.this.id
   instance_id = module.ec2_instance.id
 }

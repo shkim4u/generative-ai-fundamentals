@@ -11,7 +11,7 @@ data "aws_ami" "amazon-linux-2" {
 # aws ec2 describe-images --region ap-northeast-2 --owners amazon --filters 'Name=name,Values=Deep Learning OSS Nvidia Driver AMI GPU TensorFlow 2.13 (Ubuntu 20.04) ????????' '\
 # Name=state,Values=available' --query 'reverse(sort_by(Images, &CreationDate))[:1].ImageId' --output text
 # ami-06a0608ba0e6a7788
-data "aws_ami" "dlami_ubuntu" {
+data "aws_ami" "dlami_amazon_linux_2" {
     most_recent = true
     owners = ["amazon"] # Amazon
     filter {

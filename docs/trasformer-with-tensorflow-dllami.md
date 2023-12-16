@@ -48,7 +48,7 @@ git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-a
 
 * DLAMI (Deep Learning AMI) 이미지로부터 구동되는 EC2 인스턴스
   * 인스턴스 타입은 `g5.16xlarge`로 설정되어 있지만 상황에 따라 변경 가능합니다.
-  * OS는 `Amazon Linux 2023`입니다.
+  * OS는 `Amazon Linux 2`입니다.
 * EC2 인스턴스를 위한 IAM Role 및 Instance Profile
 * 네트워크 자원
   * VPC

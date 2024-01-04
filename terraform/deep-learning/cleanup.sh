@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Remove role from the instance profile.
-aws iam remove-role-from-instance-profile --instance-profile-name alamini-admin-instance-profile --role-name dlami-admin
+aws iam remove-role-from-instance-profile --instance-profile-name alami-admin-instance-profile --role-name dlami-admin
 
 # Delete instance profile.
 aws iam delete-instance-profile --instance-profile-name dlami-admin-instance-profile

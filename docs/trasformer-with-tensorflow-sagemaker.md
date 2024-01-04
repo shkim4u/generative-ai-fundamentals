@@ -5,7 +5,7 @@
 
 ## Agenda
 1. DLAMI (딥러닝)) 인스턴스 생성 (CloudShell 사용)
-2. 딥러닝 인스턴스 GPU 동작 확인 및 `Jupyter Notebook` 설정
+2. 딥러닝 인스턴스 GPU 동작 확인 및 `JupyterLab` 설정
 3. 텐서플로우를 활용한 트랜스포머 구현
 
 ## 1. DLAMI (딥러닝)) 인스턴스 생성 (CloudShell 사용)
@@ -61,64 +61,13 @@ terraform init
 terraform apply -auto-approve
 ```
 
-## 2. 딥러닝 인스턴스 GPU 동작 확인 및 `Jupyter Notebook` 설정
-
-### 2.1. 딥러닝 인스턴스 접속, GPU 동작 확인, CUDA 라이브러리 설정
-
-1. `Amazon EC2` 콘솔에서 `SSM Connect` 기능을 사용하여 인스턴스에 로그인합니다.<br>
-   ![](../resources/images/EC2-Connect-DLAMI.png)<br>
-   ![](../resources/images/SSM-DLAMI-Connect.png)<br>
-   ![](../resources/images/SSM-DLAMI-Connected.png)
-2. `nvidia-smi` 명령어를 통해 GPU 동작을 확인합니다.
-   ```bash
-   cd ~
-   nvidia-smi
-   ```
-   
-   ![](../resources/images/DLAMI-nvidia-smi.png)
-3. CUDA 라이브러리 상태를 확인합니다.
-   ```bash
-   cd ~
-   # 기본 환경을 확인합니다
-   echo $HOME
-   echo $LD_LIBRARY_PATH
-   ls -al /usr/local/
-   ls -al /etc/alternatives/cuda
-   ls -al /usr/local/cuda-11.8
-   python --version
-
-   # TensorFlow + GPU 동작 확인
-   python ~/generative-ai-fundamentals/scripts/check-tensorflow-gpu.py
-   ```
-
-### 2.2. `Jupyter Notebook` 설정
-
-이 리포지터리에는 Foundation Model에 활용되는 Transformer를 TensorFlow를 통해 이해할 있도록 Jupyter Notebook 파일이 포함되어 있습니다.<br>
-
-DLAMI 상에서 Jupyter Notebook 환경을 구성하기 위하여 아래 명령을 수행합니다.
-
-```bash
-cd ~/environment/generative-ai-fundamentals
-
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-
-pip uninstall -y urllib3
-pip install 'urllib3<2.0'
-
-pip install jupyterlab
-
-nohup jupyter lab --ip 0.0.0.0 &
-tail -f nohup.out
-```
-
-
+# 2. 딥러닝 인스턴스 GPU 동작 확인 및 `JupyterLab` 설정
 
 ## 환경 확인 및 설정
 
-테라폼의 자원 생성이 완료되면 `DLAMI (Deep Learning AMI)` 기반의 EC2 인스턴스가 하나 생성됩니다. 또한 이 인스턴스는 모델 학습을 빠르게 수행하기 위하여 GPU를 활용할 수 있는 `g5.16xlarge` 타입으로 생성되어 있을 것입니다.
+아래는 Amazon SageMaker에서 실습을 위한 환경을 설정하는 내용입니다.
 
+1. `Amazon SageMaker` 콘솔에서 `빠른 설정 (Quick Setup)`으로 도메인과 사용자 프로파일을 생성한 후 `SageMaker Studio`를 실행합니다.
 2. `JupyterLab` Space를 아래 사양으로 생성해 봅니다.
    * 인스턴스 타입 `ml.g4.24xlarge`, 스토리지 용량 50GB
    * 만약 생성이 실패하면 새로운 Space를 만들 필요 없이 인스턴스 타입을 순차적으로 `ml.g5.16xlarge`, `ml.g5.12xlarge`, `ml.g4dn.12xlarge` 낮추어 가면서 실행 시도해 봅니다.
@@ -202,3 +151,68 @@ sudo initctl restart jupyter-server --no-wait
 # jupyter kernelspec uninstall tf_env
 sudo initctl restart jupyter-server --no-wait
 ```
+
+
+Python 가상 환경을 설정합니다.
+
+~~위 과정을 수행한 후에 Jupyter Notebook의 커널을 재시작해 줍니다.~~
+
+
+(참고) 아래와 같이 `Torch` 라이브러리를 사용할 경우 GPU 가용 상태를 확인할 수 있습니다.
+
+# 아래는 SageMaker GPU 인스턴스 (g4dn.16xlarge, g5.24xlarge 등) 상에서 실행하는 경우에만 필요한 코드입니다
+
+# GPU 상태 확인
+
+%pip install torch
+import torch
+
+print(f'\nAvailable cuda = {torch.cuda.is_available()}')
+print(f'\nGPUs availables = {torch.cuda.device_count()}')
+print(f'\nCurrent device = {torch.cuda.current_device()}')
+print(f'\nCurrent Device location = {torch.cuda.device(0)}')
+print(f'\nName of the device = {torch.cuda.get_device_name(0)}')
+
+# Check NVIDIA GPU
+
+!nvidia-smi
+
+
+`JupyterLab` 환경의 웹 UI에서 Clone 받은 경로로 이동한 후 "transformer_ko_KR.ipynb" 파일 (이 파일)을 더블클릭하여 노트북을 시작합니다.
+
+그리고 Jupyter Notebook 커널을 위에서 설정한 `tf_env`로 설정해 줍니다.
+
+![](../resources/images/Change-Notebook-Kernel-tf-env.png)
+
+
+데이터세트를 로드하기 위해 [TensorFlow 데이터셋](https://tensorflow.org/datasets), 그리고 텍스트 처리를 위해 [TensorFlow 텍스트](https://www.tensorflow.org/text)를 설치합니다:
+
+# Install the most recent version of TensorFlow to use the improved masking support for `tf.keras.layers.MultiHeadAttention`
+
+# [2023-12-16] 아래 설치 명령은 위 환경 설정부분으로 옮겨졌습니다
+
+# !pip uninstall -y -q tensorflow keras tensorflow-estimator tensorflow-text
+
+# %pip install protobuf~=3.20.3
+
+## %pip install tensorflow==2.12.1 # SageMaker의 CUDA 버전에 맞는 2.12.1 버전을 설치합니다. -> 가상환경에서는 GPU 인식 실패, LD_LIBRARY_PATH 재설정 필요할 듯
+
+# %pip install tensorflow[and-cuda]
+
+# %pip install tensorrt
+
+# %pip install tensorflow_datasets
+
+# %pip install tensorflow-text
+
+# %pip install matplotlib
+
+# %pip install ipywidgets
+
+# 아래 tf.keras.utils.plot_model() 명령이 수행되기 위해서는 미리 pydot, graphviz를 설치해야 합니다
+
+# 필요하면 Jupyter 커널을 재시작합니다
+
+# %pip install pydot graphviz
+
+# 3. 텐서플로우를 활용한 트랜스포머 구현

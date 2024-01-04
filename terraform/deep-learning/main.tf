@@ -14,5 +14,5 @@ module "dlami_ec2" {
   role_name = module.iam.dlami_admin_role_name
   vpc_id = module.network.vpc_id
   instance_profile_name = module.iam.dlami_admin_ec2_instance_profile_name
-  instance_profile_arn = module.iam.dlami_admin_ec2_instnace_profile_arn
+  instance_profile_arn = module.iam.dlami_admin_ec2_instance_profile_arn
 }

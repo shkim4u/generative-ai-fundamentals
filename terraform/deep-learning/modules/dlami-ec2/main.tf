@@ -29,8 +29,8 @@ module "ec2_instance" {
   name = "DLAMI-Instance"
   subnet_id = var.subnet_id
   iam_role_name = var.role_name
-  # iam_instance_profile = var.instance_profile_name
-  iam_instance_profile = var.instance_profile_arn
+  iam_instance_profile = var.instance_profile_name
+  # iam_instance_profile = var.instance_profile_arn
 #  create_iam_instance_profile = true
   vpc_security_group_ids = ["${aws_security_group.dlami_instance.id}"]
   instance_type = "g5.16xlarge"

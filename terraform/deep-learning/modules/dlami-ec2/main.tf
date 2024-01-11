@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "dlami_instance_egress" {
   security_group_id = "${aws_security_group.dlami_instance.id}"
 }
 
-resource "aws_security_group_rule" "dlami_instance_ingress" {
+resource "aws_security_group_rule" "dlami_instance_ingress_jupyter" {
   type = "ingress"
   from_port = 8888
   to_port = 8888
@@ -23,6 +23,18 @@ resource "aws_security_group_rule" "dlami_instance_ingress" {
   // Add source address to this security group
   cidr_blocks = ["0.0.0.0/0"]
 }
+
+resource "aws_security_group_rule" "dlami_instance_ingress_tensorboard" {
+  type = "ingress"
+  from_port = 6006
+  to_port = 6006
+  protocol = "TCP"
+  security_group_id = "${aws_security_group.dlami_instance.id}"
+
+  // Add source address to this security group
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
 
 module "ec2_instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"

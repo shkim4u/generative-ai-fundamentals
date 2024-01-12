@@ -1,4 +1,5 @@
-# Trnasformer with TensorFlow Workshop
+# Transformer with TensorFlow Workshop
+
 > (참고)<br>
 > 이 워크샵은 GPU가 갖추어지지 않은 일반적인 리눅스 인스턴스 (예: c5.9xlarge)에서도 수행해 볼 수 있도록 구성되었습니다.
 
@@ -58,7 +59,7 @@ git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-a
 cd ~/generative-ai-fundamentals/terraform/deep-learning
 
 terraform init
-terraform apply -auto-approve
+terraform apply -var="dlami_instance_type=g5.16xlarge" -auto-approve
 ```
 
 ## 2. 딥러닝 인스턴스 GPU 동작 확인 및 `Jupyter Notebook` 설정

@@ -45,7 +45,7 @@ module "ec2_instance" {
   # iam_instance_profile = var.instance_profile_arn
 #  create_iam_instance_profile = true
   vpc_security_group_ids = ["${aws_security_group.dlami_instance.id}"]
-  instance_type = "g5.16xlarge"
+  instance_type = var.instance_type
   ami = data.aws_ami.dlami_amazon_linux_2.id
   tags = {
     "Patch Group" = "AccountGuardian-PatchGroup-DO-NOT-DELETE"

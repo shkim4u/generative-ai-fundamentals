@@ -15,4 +15,5 @@ module "dlami_ec2" {
   vpc_id = module.network.vpc_id
   instance_profile_name = module.iam.dlami_admin_ec2_instance_profile_name
   instance_profile_arn = module.iam.dlami_admin_ec2_instance_profile_arn
+  instance_type = var.dlami_instance_type
 }

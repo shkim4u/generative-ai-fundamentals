@@ -54,7 +54,9 @@ git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-a
   * Internet Gateway
   * NAT Gateway
 
-아래와 같이 자원을 생성해 줍니다.
+아래와 같이 자원을 생성해 줍니다.<br>
+> (참고)<br>
+> 아래에서 `g5.16xlarge` 인스턴스 타입의 GPU 인스턴스를 생성 시도하는데, 리소스 부족 에러가 발생할 경우 낮은 사양의 인스턴스 타입으로 낮추어 생성해 봅니다.
 ```bash
 cd ~/generative-ai-fundamentals/terraform/deep-learning
 

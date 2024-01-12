@@ -56,7 +56,7 @@ git clone https://github.com/shkim4u/Generative-AI-Fundamentals.git generative-a
 
 아래와 같이 자원을 생성해 줍니다.<br>
 > (참고)<br>
-> 아래에서 `g5.16xlarge` 인스턴스 타입의 GPU 인스턴스를 생성 시도하는데, 리소스 부족 에러가 발생할 경우 낮은 사양의 인스턴스 타입으로 낮추어 생성해 봅니다.
+> 아래에서 `g5.16xlarge` 인스턴스 타입의 GPU 인스턴스를 생성 시도하는데, 리소스 부족 에러가 발생할 경우 낮은 사양의 인스턴스 타입으로 낮추어 생성해 봅니다. (예: `g5.4xlarge`, `g5.8xlarge` 등)
 ```bash
 cd ~/generative-ai-fundamentals/terraform/deep-learning
 
@@ -105,7 +105,7 @@ terraform apply -var="dlami_instance_type=g5.16xlarge" -auto-approve
    echo $HOME
    echo $LD_LIBRARY_PATH
    ls -al /usr/local/
-   ls -al /etc/alternatives/cuda
+   #ls -al /etc/alternatives/cuda
    ls -al /usr/local/cuda-11.8
    python --version
 
@@ -142,13 +142,26 @@ pip install matplotlib
 pip install ipywidgets
 
 nohup jupyter lab --ip 0.0.0.0 &
-tail -f nohup.out
+sleep 3
+tail nohup.out
 
-# `CTRL+C`를 눌러 Tail로 부터 탈출
+# Retrieve JupyterLab token from nohup.out file.
+export TOKEN=$(grep -oP '(?<=token=)[a-z0-9]*' nohup.out | head -n 1) && echo $TOKEN
+
+# nohup.out 파일의 Initial Token 파일을 확인하여 아래 링크로 접속하면 JupyterLab 화면을 볼 수 있습니다.
+# 인스턴스 ID 확인
+export EC2_INSTANCE_ID=$(aws ec2 describe-instances --region ap-northeast-2 --filters Name=tag:Name,Values="*DLAMI-Instance*" Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text) && echo $EC2_INSTANCE_ID
+
+# 인스턴스 퍼블릭 IP 확인
+export EC2_INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $EC2_INSTANCE_ID --region ap-northeast-2 --query "Reservations[*].Instances[*].PublicIpAddress" --output text) && echo $EC2_INSTANCE_IP
+
+echo "http://$EC2_INSTANCE_IP:8888/lab?token=$TOKEN"
 ```
 
-위를 수행하면 URL이 표시되는데, 이 URL 포함된 인증 토큰을 메모해 두고 Jupyter Notebook 접속할 때 사용합니다.<br>
-Jupyter Notebook 접속 주소는 아래 명령을 통해 얻을 수 있습니다.<br>
+위를 수행하면 URL이 표시되는데, 나중에 재사용을 위해 이 URL을 메모해 두고 링크를 클릭하면 브라우저로 바로 접속합니다.
+
+<!-- 위를 수행하면 URL이 표시되는데, 이 URL 포함된 인증 토큰을 메모해 두고 Jupyter Notebook 접속할 때 사용합니다.<br>
+위 명령에 이미 포함되어 있지만 Jupyter Notebook 접속 주소는 아래 명령을 통해 얻을 수 있습니다.<br>
 
 ```bash
 export EC2_INSTANCE_ID=$(aws ec2 describe-instances --region ap-northeast-2 --filters Name=tag:Name,Values="*DLAMI-Instance*" Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text) && echo $EC2_INSTANCE_ID
@@ -157,8 +170,9 @@ export EC2_INSTANCE_ID=$(aws ec2 describe-instances --region ap-northeast-2 --fi
 export EC2_INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $EC2_INSTANCE_ID --region ap-northeast-2 --query "Reservations[*].Instances[*].PublicIpAddress" --output text) && echo $EC2_INSTANCE_IP
 
 echo "http://$EC2_INSTANCE_IP:8888"
-```
+``` -->
 
 ## 3. 텐서플로우를 활용한 트랜스포머 구현
 
 이후 과정은 Jupyter Notebook에 접속한 후에 진행자의 안내에 따라 수행합니다.
+![](../resources/images/JupyterLab.png)
